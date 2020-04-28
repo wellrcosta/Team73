@@ -1,0 +1,105 @@
+{
+	// Tema
+	"workbench.colorTheme": "Dracula At Night",
+
+	// Fonte, tamanho
+	"editor.fontSize": 15,
+	"editor.lineHeight": 24,
+	// == Necessário instalar a fonte "Fira Code" ==
+	"editor.fontFamily": "Fira Code",
+	"editor.fontLigatures": true,
+
+	// Usar tabs e não espaços
+	"prettier.useTabs": true,
+
+	// Não deixar as pastas compactadas quando tem um item somente
+	"explorer.compactFolders": false,
+
+	// ESlint corrigir automático sempre que for salvo
+	"eslint.enable": true,
+	"eslint.format.enable": true,
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+
+	// Linhas
+	"editor.rulers": [100, 140],
+
+	//Gerenciador de pacotes
+	"eslint.packageManager": "yarn",
+
+	// Aspas simples
+	"prettier.singleQuote": true,
+	"prettier.jsxSingleQuote": true,
+
+	"[javascript]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascriptreact]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		}
+	},
+	"[typescript]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		}
+	},
+	"[typescriptreact]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		}
+	},
+	"files.associations": {
+		".sequelizerc": "javascript",
+		".stylelintrc": "json",
+		".prettierrc": "json"
+	},
+	"editor.renderLineHighlight": "gutter",
+
+	// Aumentar a fonte do terminal integrado
+	"terminal.integrated.fontSize": 12,
+
+	// Ícones dos arquivos e pastas
+	// == Necessário instalar o MaterialIconTheme ==
+	"workbench.iconTheme": "material-icon-theme",
+
+	"workbench.startupEditor": "none",
+	"editor.tabSize": 4,
+	"window.zoomLevel": 0,
+	"extensions.ignoreRecommendations": true,
+	"emmet.syntaxProfiles": {
+		"javascript": "jsx"
+	},
+	"emmet.includeLanguages": {
+		"javascript": "javascriptreact"
+	},
+	"javascript.updateImportsOnFileMove.enabled": "always",
+
+	// == Necessário instalar o GitLens ==
+	"gitlens.codeLens.recentChange.enabled": true,
+	"gitlens.codeLens.authors.enabled": true,
+	"gitlens.codeLens.enabled": true,
+	"breadcrumbs.enabled": true,
+	"git.enableSmartCommit": true,
+	"editor.parameterHints.enabled": true,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+
+	// == Só deixe a linha abaixo se estiver no MacOS ==
+	"terminal.integrated.shell.osx": "/bin/zsh",
+
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmDelete": false,
+	"typescript.tsserver.log": "verbose",
+	"javascript.suggest.autoImports": true,
+	"typescript.suggest.autoImports": true,
+	"workbench.activityBar.visible": true,
+	// == Necessário instalar o Prettier ==
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}

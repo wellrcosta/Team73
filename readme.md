@@ -1,5 +1,7 @@
 # Techs
 
+> O arquivo "settings.json" contém o padrão de código que vamos levar no projeto.
+
 ### Frontend - React
 
 ### Backend - Nodejs com AdonisJS
@@ -14,8 +16,8 @@ Login com bearer
 
 ## products
 
-> per_page=100 _
-> status=enabled _
+> per*page=100 *
+> status=enabled \_
 > categorias {
 > Dormitórios > Casal > Guarda Roupas > 2 Portas
 > }
