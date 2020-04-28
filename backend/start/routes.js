@@ -1,5 +1,4 @@
 'use strict';
-import Populate from '../utils/populateDatabase';
 
 /*
 |--------------------------------------------------------------------------
@@ -10,9 +9,7 @@ import Populate from '../utils/populateDatabase';
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.get('/', () => {
-	return { greeting: 'Hello world in JSON' };
-});
-Route.post('/populate', 'Populate.Do');
+Route.get('/populate', 'PopulateController.Do');
 Route.post('/users', 'UserController.create');
 Route.post('/sessions', 'SessionController.create');
+Route.resource('/products', 'ProductController').apiOnly().middleware('auth');
