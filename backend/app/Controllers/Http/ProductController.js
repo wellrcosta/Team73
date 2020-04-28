@@ -11,9 +11,30 @@ class ProductController {
 		return data;
 	}
 
-	async store({ request, response }) {}
+	async store({ auth, request, response }) {
+		const { id } = auth.user;
 
-	async show({ params, request, response }) {}
+		const data = request.only([
+			'name',
+			'description',
+			'status',
+			'price',
+			'brand',
+			'category',
+		]);
+
+		const product = await Products.create({ ...data, user_id: id });
+
+		return product;
+	}
+
+	async show({ params, request, response }) {
+		const data = await Products.findOrFail(params.id);
+
+		await data.load('images');
+
+		return data;
+	}
 
 	async update({ params, request, response }) {}
 
