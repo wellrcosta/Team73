@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 
+import api from '../../services/api';
+
 export default function SignUp() {
-	function handleSubmit(data) {
-		console.log(data);
-		// Return is a JSON, like this { data: 'dataHere', moreData: 'moreDataHere'}
+	async function handleSubmit(data) {
+		const response = await api.get('/users', data);
+		console.log(response);
 	}
 
 	return (
@@ -15,7 +17,7 @@ export default function SignUp() {
 
 			<div className='form-group'>
 				<label>First name</label>
-				<input
+				<Input
 					type='text'
 					name='firstName'
 					className='form-control'
@@ -25,7 +27,7 @@ export default function SignUp() {
 
 			<div className='form-group'>
 				<label>Last name</label>
-				<input
+				<Input
 					type='text'
 					name='lastName'
 					className='form-control'
@@ -35,7 +37,7 @@ export default function SignUp() {
 
 			<div className='form-group'>
 				<label>Email address</label>
-				<input
+				<Input
 					type='email'
 					name='email'
 					className='form-control'
@@ -45,7 +47,7 @@ export default function SignUp() {
 
 			<div className='form-group'>
 				<label>Password</label>
-				<input
+				<Input
 					type='password'
 					name='password'
 					className='form-control'
