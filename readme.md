@@ -14,30 +14,30 @@ Login com bearer
 
 ## products
 
-> per_page=100
-> status=enabled
+> per_page=100 _
+> status=enabled _
 > categorias {
 > Dormitórios > Casal > Guarda Roupas > 2 Portas
 > }
 
 ## orders
 
-> pedidos Aprovados
-> Nota Fiscal Emitida
-> Pagamento Pendente
-> pedidos Cancelados
-> Entregues ao Cliente
-> Pedidos Enviado
+> pedidos Aprovados _
+> Nota Fiscal Emitida _
+> Pagamento Pendente _
+> pedidos Cancelados _
+> Entregues ao Cliente _
+> Pedidos Enviado _
 
 ## pedidos
 
-> NEW
-> APPROVED
-> INVOICED
-> SHIPPED
-> DELIVERED
-> CANCELED
-> SHIPMENT_EXCEPTION
+> NEW _
+> APPROVED _
+> INVOICED _
+> SHIPPED _
+> DELIVERED _
+> CANCELED _
+> SHIPMENT_EXCEPTION \*
 > PAYMENT_OVERDUE
 
 ## queues/orders
