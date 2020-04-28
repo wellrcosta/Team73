@@ -1,5 +1,4 @@
 'use strict';
-import Populate from '../utils/populateDatabase';
 
 /*
 |--------------------------------------------------------------------------

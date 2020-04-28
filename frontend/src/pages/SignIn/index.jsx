@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Form } from '@unform/web';
 import Input from '../../components/Input';
 
+import api from '../../services/api';
+
 export default function Login() {
-	function handleSubmit(data) {
-		console.log(data);
-		// Return is a JSON, like this { data: 'dataHere', moreData: 'moreDataHere'}
+	async function handleSubmit(data) {
+		const response = await api.get('/sessions', data);
+		console.log(response);
 	}
 
 	return (
