@@ -10,10 +10,10 @@ class OrderSchema extends Schema {
 
       table.increments('code').notNullable().unique()
       table.datetime('placed_at').notNullable()
-      table.datetime('uploaded_at').notNullable()
+      table.datetime('updated_at').notNullable()
       table.datetime('estimated_delivery').notNullable()
       table.integer('total_ordered')
-      table.specificType('shipping_cost', 'money')
+      table.float('shipping_cost')
 
       table.enu('shipping_method', [
         'tipos aqui' // TODO: inserir os valores possíveis
