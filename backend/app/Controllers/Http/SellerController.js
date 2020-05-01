@@ -3,7 +3,13 @@
 const User = use('App/Models/User');
 const Database = use('Database');
 
-class UserController {
+class SellerController {
+	async index() {
+		const sellers = User.all();
+
+		return sellers;
+	}
+
 	async create({ request }) {
 		const data = request.only([
 			'username',
@@ -12,13 +18,16 @@ class UserController {
 			'zipCode',
 			'address',
 			'identification',
+			'isSeller',
+			'makeDeliveries',
+			'points',
 			'range',
 			'logitude',
 			'latitude',
 		]);
-		const user = await User.create(data);
+		const seller = await User.create(data);
 
-		return user;
+		return seller;
 	}
 
 	async update({ request }) {
@@ -29,6 +38,9 @@ class UserController {
 			'zipCode',
 			'address',
 			'identification',
+			'isSeller',
+			'makeDeliveries',
+			'points',
 			'range',
 			'logitude',
 			'latitude',
@@ -52,4 +64,4 @@ class UserController {
 	}
 }
 
-module.exports = UserController;
+module.exports = SellerController;
