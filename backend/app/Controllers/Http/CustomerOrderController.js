@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Order = use('app/Models/Order');
+
 class CustomerOrderController {
   /* TODO: Testing */
   async index({
@@ -12,12 +13,12 @@ class CustomerOrderController {
     response
   }) {
     const {
-      id
+      user
     } = auth.user;
 
     const customerOrders = await Order
       .query()
-      .where('customer_id')
+      .where('customer_id', '=', user.id)
       .fetch();
 
     return response.send(customerOrders.toJSON());
