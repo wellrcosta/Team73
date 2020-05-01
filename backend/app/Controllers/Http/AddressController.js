@@ -10,9 +10,7 @@ class AddressController {
 
   async index({
     auth,
-    request,
     response,
-    view
   }) {
     const {
       user
@@ -20,10 +18,10 @@ class AddressController {
 
     const userAddresses = await Address
       .query()
-      .where('customer_id', '=', user.id)
+      .where('user_id', '=', user.id)
       .fetch();
 
-    return response.send(customerOrders.toJSON());
+    return response.send(userAddresses.toJSON());
   }
 
   async store({
