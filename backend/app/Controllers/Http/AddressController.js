@@ -5,9 +5,13 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Address = use('app/Models/Address');
+import {
+  nanoid
+} from 'nanoid';
 
 class AddressController {
 
+  /* TODO: Testing */
   async index({
     auth,
     response,
@@ -24,11 +28,44 @@ class AddressController {
     return response.send(userAddresses.toJSON());
   }
 
+  /* TODO: Testing */
   async store({
+    auth,
     request,
     response
-  }) {}
+  }) {
+    const {
+      user
+    } = auth.user;
 
+    const data = request.only([
+      'zipCode',
+      'street',
+      'city',
+      'neighborhood',
+      'complement',
+      'reference',
+      'state',
+    ]);
+
+    const newAddress = new Address()
+    newAddress.zipCode = data.zipCode;
+    newAddress.street = data.street;
+    newAddress.city = data.city;
+    newAddress.neighborhood = data.neighborhood;
+    newAddress.complement = data.complement;
+    newAddress.reference = data.reference;
+    newAddress.state = data.state;
+
+    newAddress.userId = user.id;
+    newAddress.guid = nanoid();
+
+    newAddress.save();
+
+    response.send(newAddress.toJSON());
+  }
+
+  /* TODO: Testing */
   async show({
     auth,
     params,
@@ -39,15 +76,46 @@ class AddressController {
     } = auth.user;
 
     response.send(
-      await this._getUserOrder(params.guid, user.id).toJSON()
+      await this._getUserAddress(params.guid, user.id).toJSON()
     );
   }
 
+  /* TODO: Testing */
   async update({
+    auth,
     params,
     request,
     response
-  }) {}
+  }) {
+    const {
+      user
+    } = auth.user;
+
+    const data = request.only([
+      'zipCode',
+      'street',
+      'city',
+      'neighborhood',
+      'complement',
+      'reference',
+      'state'
+    ])
+
+    const address = await this._getUserAddress(params.guid, user.id);
+
+    address.merge({
+      zipCode: data.zipCode || address.zipCode,
+      street: data.street || address.street,
+      city: data.city || address.city,
+      neighborhood: data.neighborhood || address.neighborhood,
+      complement: data.complement || address.complement,
+      reference: data.reference || address.reference,
+      state: data.state || address.state,
+    })
+
+    address.save();
+    response.send(address.toJSON());
+  }
 
   async destroy({
     params,
@@ -57,7 +125,7 @@ class AddressController {
 
   /* TODO: Testing */
   async _getUserAddress(guid, userId) {
-    return await Order
+    return await Address
       .query()
       .where('guid', '=', guid)
       .where('user_id', '=', userId)
@@ -65,4 +133,4 @@ class AddressController {
   }
 }
 
-module.exports = AddressController
+export default AddressController
