@@ -117,11 +117,21 @@ class AddressController {
     response.send(address.toJSON());
   }
 
+  /* TODO: Testing */
   async destroy({
+    auth,
     params,
-    request,
     response
-  }) {}
+  }) {
+    const {
+      user
+    } = auth.user;
+
+    const address = this._getUserAddress(params.guid, user.id);
+    address.delete()
+
+    response.send(address.toJSON());
+  }
 
   /* TODO: Testing */
   async _getUserAddress(guid, userId) {
