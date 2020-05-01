@@ -8,18 +8,16 @@ class OrderItemSchema extends Schema {
     this.create('order_items', (table) => {
       table.increments()
       table.integer('amount')
+
       table
         .integer('order_id')
-        .unsigned()
-        .notNullable()
         .references('id')
         .inTable('orders')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
+
       table
         .integer('product_id')
-        .unsigned()
-        .notNullable()
         .references('id')
         .inTable('products')
         .onUpdate('CASCADE')

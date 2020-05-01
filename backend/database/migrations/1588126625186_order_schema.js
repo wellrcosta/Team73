@@ -12,20 +12,19 @@ class OrderSchema extends Schema {
       table.datetime('placed_at').notNullable()
       table.datetime('updated_at').notNullable()
       table.datetime('estimated_delivery').notNullable()
-      table.integer('total_ordered')
-      table.float('shipping_cost')
+      table.integer('total_products')
+      table.float('delivery_cost')
 
-      table.enu('shipping_method', [
-        'tipos aqui' // TODO: inserir os valores possíveis
+      table.enu('delivery_method', [
+        'seller_home',
+        'customer_store',
       ], {
         useNative: true,
-        enumName: 'shipping_methods_type'
+        enumName: 'delivery_methods_type'
       })
 
       table
-        .integer('shipping_address_id')
-        .unsigned()
-        .notNullable()
+        .integer('delivery_address_id')
         .references('id')
         .inTable('addresses')
         .onUpdate('CASCADE')
@@ -33,8 +32,6 @@ class OrderSchema extends Schema {
 
       table
         .integer('billing_address_id')
-        .unsigned()
-        .notNullable()
         .references('id')
         .inTable('addresses')
         .onUpdate('CASCADE')
@@ -42,19 +39,23 @@ class OrderSchema extends Schema {
 
       table
         .integer('customer_id')
-        .unsigned()
-        .notNullable()
         .references('id')
-        .inTable('customers')
+        .inTable('users')
+        .onDelete('SET_NULL')
+
+      table
+        .integer('seller_id')
+        .references('id')
+        .inTable('users')
         .onDelete('SET_NULL')
 
       table.enu('status', [
+        'pending',
         'approved',
         'nf_generated',
-        'pending',
-        'cancelled',
-        'delivered',
         'sent',
+        'delivered',
+        'cancelled',
       ], {
         useNative: true,
         enumName: 'order_status_type'

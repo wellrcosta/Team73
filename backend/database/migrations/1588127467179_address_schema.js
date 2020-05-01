@@ -9,20 +9,21 @@ class AddressSchema extends Schema {
       table.increments()
 
       table
-        .integer('customer_id')
+        .integer('user_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('customers')
+        .inTable('users')
         .onUpdate('CASCADE')
-        .onDelete('CASCADE')
+        .onDelete('CASCADE');
 
-      table.string('address').notNullable()
-      table.string('state', 2).notNullable()
+      table.string('zipCode').notNullable()
+      table.string('street').notNullable()
       table.string('city').notNullable()
       table.string('neighborhood').notNullable()
       table.string('complement').notNullable()
       table.string('reference').notNullable()
+      table.string('state', 2).notNullable()
 
       table.timestamps()
     })
