@@ -25,7 +25,8 @@ Route.get('/orders', 'CustomerOrderController.index');
 Route.get('/orders/:code', 'CustomerOrderController.show');
 Route.put('/orders/:code', 'CustomerOrderController.update');
 
-Route.post('/orders', 'CustomerOrderController.store');
-Route.get('/orders', 'CustomerOrderController.index');
-Route.get('/orders/:code', 'CustomerOrderController.show');
-Route.put('/orders/:code', 'CustomerOrderController.update');
+Route.post('/addresses', 'AddressController.store');
+Route.get('/addresses', 'AddressController.index');
+Route.get('/addresses/:code', 'AddressController.show');
+Route.put('/addresses/:code', 'AddressController.update');
+Route.delete('/addresses/:code', 'AddressController.destroy');
