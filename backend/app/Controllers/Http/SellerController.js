@@ -1,66 +1,50 @@
 'use strict';
 
 const User = use('App/Models/User');
-const Database = use('Database');
 
 class SellerController {
-	async index() {
-		const sellers = User.all();
-
-		return sellers;
-	}
-
-	async create({ request }) {
+	async store({ request }) {
 		const data = request.only([
 			'username',
 			'email',
 			'password',
-			'zipCode',
-			'address',
+			'billing_address_id',
 			'identification',
 			'isSeller',
 			'makeDeliveries',
-			'points',
+			'score',
 			'range',
-			'logitude',
-			'latitude',
 		]);
+
 		const seller = await User.create(data);
 
 		return seller;
 	}
 
-	async update({ request }) {
+	async update({ params, request }) {
+		const seller = await User.findOrFail(params.id);
+
 		const data = request.only([
 			'username',
 			'email',
 			'password',
-			'zipCode',
-			'address',
+			'billing_address_id',
 			'identification',
-			'isSeller',
 			'makeDeliveries',
-			'points',
+			'score',
 			'range',
-			'logitude',
-			'latitude',
 		]);
 
-		const response = await Database.table('users')
-			.where('email', '=', data.email)
-			.update(data);
+		await seller.merge(data);
+		await seller.save();
 
-		return response;
+		return seller;
 	}
 
-	async delete({ request }) {
-		const { email } = request.all();
+	async destroy({ params, response }) {
+		const seller = await User.findOrFail(params.id);
 
-		const response = await Database.table('users')
-			.where('email', '=', email)
-			.delete();
-
-		return response;
+		await seller.delete();
 	}
 }
 
