@@ -1,0 +1,13 @@
+{
+    "version": "1.2.3",
+    "configurations": [{
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Adonis",
+        "runtimeExecutable": "npm",
+        "runtimeArgs": ["run", "debug"],
+        "port": 9229,
+        "cwd": "C:\\Users\\joao.vitor.bonadiman\\source\\Hackathon\\Team73\\backend",
+        "internalConsoleOptions": "openOnSessionStart"
+    }]
+}
