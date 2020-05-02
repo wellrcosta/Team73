@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Order = use('App/Models/Order');
+const User = use('App/Models/User');
 const Address = use('App/Models/Address');
 
 class CustomerOrderController {
@@ -16,7 +17,7 @@ class CustomerOrderController {
 			.where('customer_id', '=', id)
 			.fetch();
 
-		return response.send(customerOrders.toJSON());
+		return response.send(await this._orderToJson(customerOrders));
 	}
 
 	async store({ auth, request, response }) {
@@ -71,13 +72,14 @@ class CustomerOrderController {
 			status: 'pending',
 		});
 
-		response.send(order.toJSON());
+		response.send(await this._orderToJson(order));
 	}
 
 	async show({ auth, params, response }) {
 		const { id } = auth.user;
+		const order = await this._getUserOrder(params.id, id);
 
-		response.send(await this._getUserOrder(params.id, id));
+		response.send(await this._orderToJson(order));
 	}
 
 	/* TODO: Testing and complete controller */
@@ -88,28 +90,40 @@ class CustomerOrderController {
 			'estimatedDelivery',
 			'deliveryCost',
 			'deliveryMethod',
-			'deliveryAddress',
-			'billingAddress',
 			'status',
 		]);
 
 		const order = await this._getUserOrder(params.id, id);
 
-		// if deliveryAddress
-		// if billingAddress
-
 		order.merge({ ...data });
+		await order.save();
 
-		order.save();
-		response.send(order.toJSON());
+		response.send(await this._orderToJson(order));
 	}
 
-	/* TODO: Testing */
 	async _getUserOrder(id, userId) {
 		return await Order.query()
 			.where('id', '=', id)
 			.where('customer_id', '=', userId)
 			.fetch();
+	}
+
+	async _orderToJson(orderSerializer) {
+		const jsonSerializer = orderSerializer.toJSON();
+
+		for (const order of jsonSerializer) {
+			order.customer_id = await User.findOrFail(order.customer_id);
+			order.seller_id = await User.findOrFail(order.seller_id);
+
+			order.delivery_address_id = await Address.findOrFail(
+				order.delivery_address_id
+			);
+			order.billing_address_id = await Address.findOrFail(
+				order.billing_address_id
+			);
+		}
+
+		return jsonSerializer;
 	}
 }
 

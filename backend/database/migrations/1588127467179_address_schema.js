@@ -16,8 +16,8 @@ class AddressSchema extends Schema {
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
 
-			table.string('number').notNullable();
-			table.string('zipcode').notNullable();
+			table.string('number').default('0');
+			table.string('zipcode', 8).notNullable();
 			table.string('street').notNullable();
 			table.string('city').notNullable();
 			table.string('neighborhood').notNullable();

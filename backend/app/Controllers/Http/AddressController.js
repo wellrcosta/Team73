@@ -1,146 +1,91 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Address = use('app/Models/Address');
-import {
-  nanoid
-} from 'nanoid';
+const Address = use('App/Models/Address');
+const User = use('App/Models/User');
 
 class AddressController {
+	async index({ auth, response }) {
+		const { id } = auth.user;
 
-  /* TODO: Testing */
-  async index({
-    auth,
-    response,
-  }) {
-    const {
-      user
-    } = auth.user;
+		const userAddresses = await Address.query()
+			.where('user_id', '=', id)
+			.fetch();
 
-    const userAddresses = await Address
-      .query()
-      .where('user_id', '=', user.id)
-      .fetch();
+		return response.send(await this._addressToJson(userAddresses));
+	}
 
-    return response.send(userAddresses.toJSON());
-  }
+	async store({ auth, request, response }) {
+		const { id: user_id } = auth.user;
 
-  /* TODO: Testing */
-  async store({
-    auth,
-    request,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		const data = request.only([
+			'zipcode',
+			'street',
+			'city',
+			'neighborhood',
+			'complement',
+			'reference',
+			'state',
+			'number',
+		]);
 
-    const data = request.only([
-      'zipCode',
-      'street',
-      'city',
-      'neighborhood',
-      'complement',
-      'reference',
-      'state',
-    ]);
+		const newAddress = await Address.create({ ...data, user_id });
 
-    const newAddress = new Address()
-    newAddress.zipCode = data.zipCode;
-    newAddress.street = data.street;
-    newAddress.city = data.city;
-    newAddress.neighborhood = data.neighborhood;
-    newAddress.complement = data.complement;
-    newAddress.reference = data.reference;
-    newAddress.state = data.state;
+		response.send(await this._addressToJson(newAddress));
+	}
 
-    newAddress.userId = user.id;
-    newAddress.guid = nanoid();
+	async show({ params, response }) {
+		const address = await Address.findOrFail(params.id);
 
-    newAddress.save();
+		response.send(await this._addressToJson(address));
+	}
 
-    response.send(newAddress.toJSON());
-  }
+	/* TODO: Testing */
+	async update({ params, request, response }) {
+		const data = request.only([
+			'zipcode',
+			'street',
+			'city',
+			'neighborhood',
+			'complement',
+			'reference',
+			'state',
+			'number',
+		]);
 
-  /* TODO: Testing */
-  async show({
-    auth,
-    params,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		const address = await Address.findOrFail(params.id);
 
-    response.send(
-      await this._getUserAddress(params.guid, user.id).toJSON()
-    );
-  }
+		address.merge({ ...data });
 
-  /* TODO: Testing */
-  async update({
-    auth,
-    params,
-    request,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		await address.save();
+		response.send(await this._addressToJson(address));
+	}
 
-    const data = request.only([
-      'zipCode',
-      'street',
-      'city',
-      'neighborhood',
-      'complement',
-      'reference',
-      'state'
-    ])
+	async destroy({ auth, params, response }) {
+		const { id } = auth.user;
 
-    const address = await this._getUserAddress(params.guid, user.id);
+		const address = await Address.findOrFail(params.id);
+		await address.delete();
 
-    address.merge({
-      zipCode: data.zipCode || address.zipCode,
-      street: data.street || address.street,
-      city: data.city || address.city,
-      neighborhood: data.neighborhood || address.neighborhood,
-      complement: data.complement || address.complement,
-      reference: data.reference || address.reference,
-      state: data.state || address.state,
-    })
+		response.status(200);
+	}
 
-    address.save();
-    response.send(address.toJSON());
-  }
+	async _addressToJson(addressSerializer) {
+		const jsonSerializer = addressSerializer.toJSON();
 
-  /* TODO: Testing */
-  async destroy({
-    auth,
-    params,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		try {
+			for (const address of jsonSerializer) {
+				address.user_id = await User.findOrFail(address.user_id);
+			}
+		} catch (TypeError) {
+			jsonSerializer.user_id = await User.findOrFail(jsonSerializer.user_id);
+		}
 
-    const address = this._getUserAddress(params.guid, user.id);
-    address.delete()
-
-    response.send(address.toJSON());
-  }
-
-  /* TODO: Testing */
-  async _getUserAddress(guid, userId) {
-    return await Address
-      .query()
-      .where('guid', '=', guid)
-      .where('user_id', '=', userId)
-      .fetch()
-  }
+		return jsonSerializer;
+	}
 }
 
-export default AddressController
+module.exports = AddressController;

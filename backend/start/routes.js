@@ -27,8 +27,6 @@ Route.put('/orders/:id', 'CustomerOrderController.update').middleware('auth');
 
 Route.get('/addresses', 'AddressController.index').middleware('auth');
 Route.post('/addresses', 'AddressController.store').middleware('auth');
-Route.get('/addresses/:code', 'AddressController.show').middleware('auth');
-Route.put('/addresses/:code', 'AddressController.update').middleware('auth');
-Route.delete('/addresses/:code', 'AddressController.destroy').middleware(
-	'auth'
-);
+Route.get('/addresses/:id', 'AddressController.show').middleware('auth');
+Route.put('/addresses/:id', 'AddressController.update').middleware('auth');
+Route.delete('/addresses/:id', 'AddressController.destroy').middleware('auth');
