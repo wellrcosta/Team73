@@ -9,7 +9,6 @@ const User = use('App/Models/User');
 const Address = use('App/Models/Address');
 
 class CustomerOrderController {
-	/* TODO: Testing */
 	async index({ auth, response }) {
 		const { id } = auth.user;
 
@@ -77,12 +76,12 @@ class CustomerOrderController {
 
 	async show({ auth, params, response }) {
 		const { id } = auth.user;
-		const order = await this._getUserOrder(params.id, id);
+		const order = await this._getCustomerOrder(params.id, id);
 
 		response.send(await this._orderToJson(order));
 	}
 
-	/* TODO: Testing and complete controller */
+	/* Não faz atualização de endereço */
 	async update({ auth, params, request, response }) {
 		const { id } = auth.user;
 
@@ -93,7 +92,7 @@ class CustomerOrderController {
 			'status',
 		]);
 
-		const order = await this._getUserOrder(params.id, id);
+		const order = await Order.findOrFail(params.id);
 
 		order.merge({ ...data });
 		await order.save();
@@ -101,7 +100,7 @@ class CustomerOrderController {
 		response.send(await this._orderToJson(order));
 	}
 
-	async _getUserOrder(id, userId) {
+	async _getCustomerOrder(id, userId) {
 		return await Order.query()
 			.where('id', '=', id)
 			.where('customer_id', '=', userId)
@@ -110,16 +109,31 @@ class CustomerOrderController {
 
 	async _orderToJson(orderSerializer) {
 		const jsonSerializer = orderSerializer.toJSON();
+		try {
+			for (const order of jsonSerializer) {
+				order.customer_id = await User.findOrFail(order.customer_id);
+				order.seller_id = await User.findOrFail(order.seller_id);
 
-		for (const order of jsonSerializer) {
-			order.customer_id = await User.findOrFail(order.customer_id);
-			order.seller_id = await User.findOrFail(order.seller_id);
-
-			order.delivery_address_id = await Address.findOrFail(
-				order.delivery_address_id
+				order.delivery_address_id = await Address.findOrFail(
+					order.delivery_address_id
+				);
+				order.billing_address_id = await Address.findOrFail(
+					order.billing_address_id
+				);
+			}
+		} catch (TypeError) {
+			jsonSerializer.customer_id = await User.findOrFail(
+				jsonSerializer.customer_id
 			);
-			order.billing_address_id = await Address.findOrFail(
-				order.billing_address_id
+			jsonSerializer.seller_id = await User.findOrFail(
+				jsonSerializer.seller_id
+			);
+
+			jsonSerializer.delivery_address_id = await Address.findOrFail(
+				jsonSerializer.delivery_address_id
+			);
+			jsonSerializer.billing_address_id = await Address.findOrFail(
+				jsonSerializer.billing_address_id
 			);
 		}
 

@@ -20,10 +20,14 @@ Route.post('/users', 'UserController.create');
 
 Route.post('/sessions', 'SessionController.create');
 
-Route.get('/orders', 'CustomerOrderController.index').middleware('auth');
-Route.post('/orders', 'CustomerOrderController.store').middleware('auth');
-Route.get('/orders/:id', 'CustomerOrderController.show').middleware('auth');
-Route.put('/orders/:id', 'CustomerOrderController.update').middleware('auth');
+Route.get('/myOrders', 'CustomerOrderController.index').middleware('auth');
+Route.post('/myOrders', 'CustomerOrderController.store').middleware('auth');
+Route.get('/myOrders/:id', 'CustomerOrderController.show').middleware('auth');
+Route.put('/myOrders/:id', 'CustomerOrderController.update').middleware('auth');
+
+Route.get('/orders', 'SellerOrderController.index').middleware('auth');
+Route.get('/orders/:id', 'SellerOrderController.show').middleware('auth');
+Route.put('/orders/:id', 'SellerOrderController.update').middleware('auth');
 
 Route.get('/addresses', 'AddressController.index').middleware('auth');
 Route.post('/addresses', 'AddressController.store').middleware('auth');

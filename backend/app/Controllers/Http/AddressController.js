@@ -43,7 +43,6 @@ class AddressController {
 		response.send(await this._addressToJson(address));
 	}
 
-	/* TODO: Testing */
 	async update({ params, request, response }) {
 		const data = request.only([
 			'zipcode',
