@@ -1,159 +1,116 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Order = use('app/Models/Order');
+const Order = use('App/Models/Order');
+const Address = use('App/Models/Address');
 
 class CustomerOrderController {
-  /* TODO: Testing */
-  async index({
-    auth,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+	/* TODO: Testing */
+	async index({ auth, response }) {
+		const { id } = auth.user;
 
-    const customerOrders = await Order
-      .query()
-      .where('customer_id', '=', user.id)
-      .fetch();
+		const customerOrders = await Order.query()
+			.where('customer_id', '=', id)
+			.fetch();
 
-    return response.send(customerOrders.toJSON());
-  }
+		return response.send(customerOrders.toJSON());
+	}
 
-  /* TODO: Testing */
-  async store({
-    auth,
-    request,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+	async store({ auth, request, response }) {
+		const { user } = auth;
 
-    const data = request.only([
-      'estimatedDelivery',
-      'totalProducts',
-      'deliveryCost',
-      'deliveryMethod',
-      'useDefaultDeliveryAddress',
-      'useDefaultBillingAddress',
-      'newDeliveryAddress',
-      'newBillingAddress'
-    ]);
+		const data = request.only([
+			'seller_id',
+			'estimated_delivery',
+			'delivery_cost',
+			'delivery_method',
+		]);
 
-    const newOrder = new Order()
-    newOrder.estimatedDelivery = data.estimatedDelivery;
-    newOrder.totalProducts = data.totalProducts;
-    newOrder.deliveryCost = data.deliveryCost;
-    newOrder.deliveryMethod = data.deliveryMethod;
+		const {
+			use_default_billing_address: useDefaultBillingAddress,
+		} = request.only(['use_default_billing_address']);
 
-    newOrder.deliveryAddressId = this._useDefaultOrSaveAddress(
-      data.useDefaultDeliveryAddress,
-      user,
-      data.newDeliveryAddress
-    );
+		const {
+			use_default_delivery_address: useDefaultDeliveryAddress,
+		} = request.only(['use_default_delivery_address']);
 
-    newOrder.billingAddressId = this._useDefaultOrSaveAddress(
-      data.useDefaultBillingAddress,
-      user,
-      data.newBillingAddress
-    );
+		const { new_billing_address: newBillingAddress } = request.only([
+			'new_billing_address',
+		]);
 
-    newOrder.placedAt = Date.now();
-    newOrder.updatedAt = Date.now();
+		const { new_delivery_address: newDeliveryAddress } = request.only([
+			'new_delivery_address',
+		]);
 
-    newOrder.status = 'pending';
+		if (!useDefaultBillingAddress) {
+			const billingAddress = await Address.create({
+				...newBillingAddress,
+				user_id: user.id,
+			});
+			data.billing_address_id = billingAddress.id;
+		} else {
+			data.billing_address_id = user.default_billing_address_id;
+		}
 
-    newOrder.save();
+		if (!useDefaultDeliveryAddress) {
+			const deliveryAddress = await Address.create({
+				...newDeliveryAddress,
+				user_id: user.id,
+			});
+			data.delivery_address_id = deliveryAddress.id;
+		} else {
+			data.delivery_address_id = user.default_delivery_address_id;
+		}
 
-    response.send(newOrder.toJSON());
-  }
+		const order = await Order.create({
+			...data,
+			customer_id: user.id,
+			status: 'pending',
+		});
 
-  /* TODO: Testing */
-  async show({
-    auth,
-    params,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		response.send(order.toJSON());
+	}
 
-    response.send(
-      await this._getUserOrder(params.code, user.id).toJSON()
-    );
-  }
+	async show({ auth, params, response }) {
+		const { id } = auth.user;
 
-  /* TODO: Testing and complete controller */
-  async update({
-    auth,
-    params,
-    request,
-    response
-  }) {
-    const {
-      user
-    } = auth.user;
+		response.send(await this._getUserOrder(params.id, id));
+	}
 
-    const data = request.only([
-      'estimatedDelivery',
-      'deliveryCost',
-      'deliveryMethod',
-      'deliveryAddress',
-      'billingAddress',
-      'status'
-    ])
+	/* TODO: Testing and complete controller */
+	async update({ auth, params, request, response }) {
+		const { id } = auth.user;
 
-    const order = await this._getUserOrder(params.code, user.id);
+		const data = request.only([
+			'estimatedDelivery',
+			'deliveryCost',
+			'deliveryMethod',
+			'deliveryAddress',
+			'billingAddress',
+			'status',
+		]);
 
-    // if deliveryAddress
-    // if billingAddress
+		const order = await this._getUserOrder(params.id, id);
 
+		// if deliveryAddress
+		// if billingAddress
 
-    order.merge({
-      updateAt: Date.now(),
-      estimatedDelivery: data.estimatedDelivery || order.estimatedDelivery,
-      deliveryMethod: data.deliveryMethod || order.deliveryMethod,
-      status: data.status || order.status,
-    })
+		order.merge({ ...data });
 
-    order.save();
-    response.send(order.toJSON());
-  }
+		order.save();
+		response.send(order.toJSON());
+	}
 
-  /* TODO: Testing */
-  async _getUserOrder(code, userId) {
-    return await Order
-      .query()
-      .where('code', '=', code)
-      .where('customer_id', '=', userId)
-      .fetch()
-  }
-
-  /* TODO: Testing */
-  _useDefaultOrSaveAddress(useDefault, user, addressData) {
-    if (useDefault) {
-      return user.defaultDeliveryAddress.id;
-    }
-
-    const newAddress = new Address();
-    newAddress.user_id = user.id;
-    newAddress.zipCode = addressData.zipCode;
-    newAddress.street = addressData.street;
-    newAddress.city = addressData.city;
-    newAddress.neighborhood = addressData.neighborhood;
-    newAddress.complement = addressData.complement;
-    newAddress.reference = addressData.reference;
-    newAddress.state = addressData.state;
-
-    newAddress.save();
-
-    return newAddress.id;
-  }
+	/* TODO: Testing */
+	async _getUserOrder(id, userId) {
+		return await Order.query()
+			.where('id', '=', id)
+			.where('customer_id', '=', userId)
+			.fetch();
+	}
 }
 
-module.exports = CustomerOrderController
+module.exports = CustomerOrderController;

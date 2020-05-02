@@ -11,7 +11,7 @@ const Route = use('Route');
 
 Route.get('/', () => {
 	return {
-		greeting: 'Hello world in JSON'
+		greeting: 'Hello world in JSON',
 	};
 });
 Route.post('/populate', 'Populate.Do');
@@ -20,13 +20,15 @@ Route.post('/users', 'UserController.create');
 
 Route.post('/sessions', 'SessionController.create');
 
-Route.post('/orders', 'CustomerOrderController.store');
-Route.get('/orders', 'CustomerOrderController.index');
-Route.get('/orders/:code', 'CustomerOrderController.show');
-Route.put('/orders/:code', 'CustomerOrderController.update');
+Route.get('/orders', 'CustomerOrderController.index').middleware('auth');
+Route.post('/orders', 'CustomerOrderController.store').middleware('auth');
+Route.get('/orders/:id', 'CustomerOrderController.show').middleware('auth');
+Route.put('/orders/:id', 'CustomerOrderController.update').middleware('auth');
 
-Route.post('/addresses', 'AddressController.store');
-Route.get('/addresses', 'AddressController.index');
-Route.get('/addresses/:code', 'AddressController.show');
-Route.put('/addresses/:code', 'AddressController.update');
-Route.delete('/addresses/:code', 'AddressController.destroy');
+Route.get('/addresses', 'AddressController.index').middleware('auth');
+Route.post('/addresses', 'AddressController.store').middleware('auth');
+Route.get('/addresses/:code', 'AddressController.show').middleware('auth');
+Route.put('/addresses/:code', 'AddressController.update').middleware('auth');
+Route.delete('/addresses/:code', 'AddressController.destroy').middleware(
+	'auth'
+);

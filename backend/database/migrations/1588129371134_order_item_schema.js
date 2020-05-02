@@ -7,21 +7,9 @@ class OrderItemSchema extends Schema {
   up() {
     this.create('order_items', (table) => {
       table.increments()
+
       table.integer('amount')
 
-      table
-        .integer('order_id')
-        .references('id')
-        .inTable('orders')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
-
-      table
-        .integer('product_id')
-        .references('id')
-        .inTable('products')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
       table.timestamps()
     })
   }

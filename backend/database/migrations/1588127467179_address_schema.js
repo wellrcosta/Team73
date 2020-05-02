@@ -1,37 +1,37 @@
-'use strict'
+'use strict';
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+const Schema = use('Schema');
 
 class AddressSchema extends Schema {
-  up() {
-    this.create('addresses', (table) => {
-      table.increments()
+	up() {
+		this.create('addresses', (table) => {
+			table.increments();
 
-      table
-        .integer('user_id')
-        .references('id')
-        .inTable('users')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE');
+			table
+				.integer('user_id')
+				.unsigned()
+				.references('id')
+				.inTable('users')
+				.onUpdate('CASCADE')
+				.onDelete('CASCADE');
 
-      table.string('zipCode').notNullable();
-      table.string('street').notNullable();
-      table.string('city').notNullable();
-      table.string('neighborhood').notNullable();
-      table.string('complement').notNullable();
-      table.string('reference').notNullable();
-      table.string('state', 2).notNullable();
+			table.string('number').notNullable();
+			table.string('zipcode').notNullable();
+			table.string('street').notNullable();
+			table.string('city').notNullable();
+			table.string('neighborhood').notNullable();
+			table.string('complement');
+			table.string('reference');
+			table.string('state', 2).notNullable();
 
-      table.string('guid').notNullable().unique();
+			table.timestamps();
+		});
+	}
 
-      table.timestamps()
-    })
-  }
-
-  down() {
-    this.drop('addresses')
-  }
+	down() {
+		this.drop('addresses');
+	}
 }
 
-module.exports = AddressSchema
+module.exports = AddressSchema;
