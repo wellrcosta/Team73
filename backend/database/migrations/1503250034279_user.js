@@ -27,7 +27,7 @@ class UserSchema extends Schema {
 			table.boolean('isSeller').defaultTo(false);
 			table.boolean('makeDeliveries').defaultTo(false);
 			table.integer('score').defaultTo(0);
-			table.string('range');
+			table.float('range').defaultTo(0);
 			table.timestamps();
 		});
 	}

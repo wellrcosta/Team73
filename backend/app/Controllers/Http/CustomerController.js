@@ -32,7 +32,7 @@ class CustomerController {
 			'range',
 		]);
 
-		await customer.merge(data);
+		customer.merge(data);
 		await customer.save();
 
 		return customer;
