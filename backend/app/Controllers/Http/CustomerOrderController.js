@@ -4,9 +4,17 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Config = use('Config');
+
 const Order = use('App/Models/Order');
 const User = use('App/Models/User');
 const Address = use('App/Models/Address');
+
+const SmsController = use('App/Controllers/Http/SmsController');
+const smsSender = new SmsController();
+
+const newOrderSms = Config.get('strings.newOrderSms');
+const updateOrderSms = Config.get('strings.updateOrderSms');
 
 class CustomerOrderController {
 	async index({ auth, response }) {
@@ -33,6 +41,7 @@ class CustomerOrderController {
 			'delivery_method',
 		]);
 
+		// Esse trecho precisa de uma refatoração séria
 		const {
 			use_default_billing_address: useDefaultBillingAddress,
 		} = request.only(['use_default_billing_address']);
@@ -75,7 +84,12 @@ class CustomerOrderController {
 			status: 'pending',
 		});
 
-		response.send(await this._orderToJson(order));
+		await smsSender.send(
+			user.phone_number,
+			newOrderSms(user.first_name, order.id)
+		);
+
+		response.send(order.toJSON());
 	}
 
 	async show({ auth, params, response }) {
@@ -94,7 +108,7 @@ class CustomerOrderController {
 
 	/* Não faz atualização de endereço */
 	async update({ auth, params, request, response }) {
-		const { id } = auth.user;
+		const { user } = auth;
 
 		const data = request.only([
 			'estimatedDelivery',
@@ -104,7 +118,7 @@ class CustomerOrderController {
 		]);
 
 		const order = await Order.query()
-			.where({ id: params.id, customer_id: id })
+			.where({ id: params.id, customer_id: user.id })
 			.with('deliveryAddress')
 			.with('billingAddress')
 			.with('customer')
@@ -118,40 +132,36 @@ class CustomerOrderController {
 		order.merge({ ...data });
 		await order.save();
 
-		response.send(order.toJSON());
-	}
-
-	async _orderToJson(orderSerializer) {
-		const jsonSerializer = orderSerializer.toJSON();
-		try {
-			for (const order of jsonSerializer) {
-				order.customer_id = await User.findOrFail(order.customer_id);
-				order.seller_id = await User.findOrFail(order.seller_id);
-
-				order.delivery_address_id = await Address.findOrFail(
-					order.delivery_address_id
-				);
-				order.billing_address_id = await Address.findOrFail(
-					order.billing_address_id
-				);
-			}
-		} catch (TypeError) {
-			jsonSerializer.customer_id = await User.findOrFail(
-				jsonSerializer.customer_id
-			);
-			jsonSerializer.seller_id = await User.findOrFail(
-				jsonSerializer.seller_id
-			);
-
-			jsonSerializer.delivery_address_id = await Address.findOrFail(
-				jsonSerializer.delivery_address_id
-			);
-			jsonSerializer.billing_address_id = await Address.findOrFail(
-				jsonSerializer.billing_address_id
-			);
+		let parsedStatus = '';
+		switch (order.status) {
+			case 'pending':
+				parsedStatus = 'Pendente';
+				break;
+			case 'approved':
+				parsedStatus = 'Aprovado';
+				break;
+			case 'nf_generated':
+				parsedStatus = 'Geração de Nota Fiscal';
+				break;
+			case 'sent':
+				parsedStatus = 'Enviado';
+				break;
+			case 'delivered':
+				parsedStatus = 'Entregue';
+				break;
+			case 'cancelled':
+				parsedStatus = 'Cancelado';
+				break;
+			default:
+				parsedStatus = 'Desconhecido';
 		}
 
-		return jsonSerializer;
+		await smsSender.send(
+			user.phone_number,
+			updateOrderSms(user.first_name, order.id, parsedStatus)
+		);
+
+		response.send(order.toJSON());
 	}
 }
 

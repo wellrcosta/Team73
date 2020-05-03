@@ -8,10 +8,11 @@ class CustomerController {
 			'username',
 			'email',
 			'password',
-			'delivery_address_id',
-			'billing_address_id',
+			'phone_number',
 			'identification',
 			'range',
+			'first_name',
+			'last_name',
 		]);
 
 		const customer = await User.create(data);
@@ -26,10 +27,13 @@ class CustomerController {
 			'username',
 			'email',
 			'password',
+			'phone_number',
 			'delivery_address_id',
 			'billing_address_id',
 			'identification',
 			'range',
+			'first_name',
+			'last_name',
 		]);
 
 		customer.merge(data);

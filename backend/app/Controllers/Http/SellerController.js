@@ -8,12 +8,15 @@ class SellerController {
 			'username',
 			'email',
 			'password',
+			'phone_number',
 			'billing_address_id',
 			'identification',
 			'isSeller',
 			'makeDeliveries',
 			'score',
 			'range',
+			'first_name',
+			'last_name',
 		]);
 
 		const seller = await User.create(data);
@@ -28,11 +31,14 @@ class SellerController {
 			'username',
 			'email',
 			'password',
+			'phone_number',
 			'billing_address_id',
 			'identification',
 			'makeDeliveries',
 			'score',
 			'range',
+			'first_name',
+			'last_name',
 		]);
 
 		await seller.merge(data);

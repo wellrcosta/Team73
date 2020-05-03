@@ -12,7 +12,7 @@ const Route = use('Route');
 Route.post('/populate', 'Populate.Do');
 Route.post('/sessions', 'SessionController.create');
 
-Route.post('/sms', 'SmsController.send');
+Route.post('/sms', 'SmsController.store');
 
 Route.get('/myOrders', 'CustomerOrderController.index').middleware('auth');
 Route.post('/myOrders', 'CustomerOrderController.store').middleware('auth');

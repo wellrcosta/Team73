@@ -11,14 +11,16 @@ const phoneNumber = Config.get('sms.phoneNumber');
 const Client = new twilio(twilioAccountSid, authToken);
 
 class SmsController {
-	async send({ request, response }) {
-		const { to, body, mediaUrl } = request.only(['to', 'body', 'mediaUrl']);
+	async store({ request, response }) {
+		const { data } = request.only(['to', 'body', 'mediaUrl']);
 
-		if (!to || !body) {
-			return response
-				.status(400)
-				.send("Parameters 'to' and 'body' are required!");
-		}
+		await this.send(...data);
+
+		return response.status(201).send(`Message sent!`);
+	}
+
+	async send(to, body, mediaUrl) {
+		to = `+55${to}`;
 
 		await Client.messages.create({
 			to,
@@ -26,8 +28,6 @@ class SmsController {
 			body,
 			mediaUrl,
 		});
-
-		return response.status(201).send(`Message sent!`);
 	}
 }
 

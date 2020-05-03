@@ -9,7 +9,10 @@ class UserSchema extends Schema {
 			table.increments();
 			table.string('username').notNullable().unique();
 			table.string('email').notNullable().unique();
+			table.string('first_name').notNullable();
+			table.string('last_name').notNullable();
 			table.string('password').notNullable();
+			table.string('phone_number', 11).notNullable();
 
 			table
 				.integer('delivery_address_id')
