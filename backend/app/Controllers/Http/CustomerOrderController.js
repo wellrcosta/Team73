@@ -13,10 +13,14 @@ class CustomerOrderController {
 		const { id } = auth.user;
 
 		const customerOrders = await Order.query()
-			.where('customer_id', '=', id)
+			.where({ customer_id: id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
 			.fetch();
 
-		return response.send(await this._orderToJson(customerOrders));
+		return response.send(customerOrders.toJSON());
 	}
 
 	async store({ auth, request, response }) {
@@ -76,9 +80,16 @@ class CustomerOrderController {
 
 	async show({ auth, params, response }) {
 		const { id } = auth.user;
-		const order = await this._getCustomerOrder(params.id, id);
 
-		response.send(await this._orderToJson(order));
+		const customerOrder = await Order.query()
+			.where({ id: params.id, customer_id: id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
+			.fetch();
+
+		response.send(customerOrder.toJSON());
 	}
 
 	/* Não faz atualização de endereço */
@@ -92,19 +103,22 @@ class CustomerOrderController {
 			'status',
 		]);
 
-		const order = await Order.findOrFail(params.id);
+		const order = await Order.query()
+			.where({ id: params.id, customer_id: id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
+			.first();
+
+		if (!order) {
+			return response.status(404).send('Not found');
+		}
 
 		order.merge({ ...data });
 		await order.save();
 
-		response.send(await this._orderToJson(order));
-	}
-
-	async _getCustomerOrder(id, userId) {
-		return await Order.query()
-			.where('id', '=', id)
-			.where('customer_id', '=', userId)
-			.fetch();
+		response.send(order.toJSON());
 	}
 
 	async _orderToJson(orderSerializer) {

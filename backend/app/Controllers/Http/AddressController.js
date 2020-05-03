@@ -13,9 +13,11 @@ class AddressController {
 
 		const userAddresses = await Address.query()
 			.where('user_id', '=', id)
+			.with('user.defaultDeliveryAddress')
+			.with('user.defaultBillingAddress')
 			.fetch();
 
-		return response.send(await this._addressToJson(userAddresses));
+		return response.send(userAddresses.toJSON());
 	}
 
 	async store({ auth, request, response }) {
@@ -33,14 +35,16 @@ class AddressController {
 		]);
 
 		const newAddress = await Address.create({ ...data, user_id });
+		await newAddress.load('user');
 
-		response.send(await this._addressToJson(newAddress));
+		response.send(newAddress.toJSON());
 	}
 
 	async show({ params, response }) {
 		const address = await Address.findOrFail(params.id);
+		await address.load('user');
 
-		response.send(await this._addressToJson(address));
+		response.send(address.toJSON());
 	}
 
 	async update({ params, request, response }) {
@@ -60,30 +64,16 @@ class AddressController {
 		address.merge({ ...data });
 
 		await address.save();
-		response.send(await this._addressToJson(address));
+		await address.load('user');
+
+		response.send(address.toJSON());
 	}
 
-	async destroy({ auth, params, response }) {
-		const { id } = auth.user;
-
+	async destroy({ params, response }) {
 		const address = await Address.findOrFail(params.id);
 		await address.delete();
 
-		response.status(200);
-	}
-
-	async _addressToJson(addressSerializer) {
-		const jsonSerializer = addressSerializer.toJSON();
-
-		try {
-			for (const address of jsonSerializer) {
-				address.user_id = await User.findOrFail(address.user_id);
-			}
-		} catch (TypeError) {
-			jsonSerializer.user_id = await User.findOrFail(jsonSerializer.user_id);
-		}
-
-		return jsonSerializer;
+		response.status(200).send();
 	}
 }
 

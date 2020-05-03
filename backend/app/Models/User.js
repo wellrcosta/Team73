@@ -8,7 +8,15 @@ const Hash = use('Hash');
 
 class User extends Model {
 	static get hidden() {
-		return ['password'];
+		return ['password', 'delivery_address_id', 'billing_address_id'];
+	}
+
+	defaultDeliveryAddress() {
+		return this.hasOne('App/Models/Address');
+	}
+
+	defaultBillingAddress() {
+		return this.hasOne('App/Models/Address');
 	}
 
 	static boot() {

@@ -5,37 +5,39 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Order = use('App/Models/Order');
-const User = use('App/Models/User');
-const Address = use('App/Models/Address');
 
 class SellerOrderController {
 	async index({ auth, response }) {
 		const { user: seller } = auth;
 
-		// adicionar _checkSeller
-
 		const sellerOrders = await Order.query()
-			.where('seller_id', '=', seller.id)
+			.where({ seller_id: seller.id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
 			.fetch();
 
-		return response.send(await this._orderToJson(sellerOrders));
+		return response.send(sellerOrders.toJSON());
 	}
 
 	async show({ auth, params, response }) {
 		const { user: seller } = auth;
 
-		// adicionar _checkSeller
+		const sellerOrder = await Order.query()
+			.where({ id: params.id, seller_id: seller.id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
+			.first();
 
-		const order = await this._getSellerOrder(params.id, seller.id);
-
-		response.send(await this._orderToJson(order));
+		response.send(sellerOrder.toJSON());
 	}
 
 	/* Não faz atualização de endereço */
 	async update({ auth, params, request, response }) {
 		const { user: seller } = auth;
-
-		// adicionar _checkSeller
 
 		const data = request.only([
 			'estimatedDelivery',
@@ -44,58 +46,18 @@ class SellerOrderController {
 			'status',
 		]);
 
-		const order = await Order.findOrFail(params.id);
+		const sellerOrder = await Order.query()
+			.where({ id: params.id, seller_id: seller.id })
+			.with('deliveryAddress')
+			.with('billingAddress')
+			.with('customer')
+			.with('seller')
+			.first();
 
-		order.merge({ ...data });
-		await order.save();
+		sellerOrder.merge({ ...data });
+		await sellerOrder.save();
 
-		response.send(await this._orderToJson(order));
-	}
-
-	_checkSeller(user, response) {
-		if (!user.isSeller) {
-			response.status(401);
-		}
-	}
-
-	async _getSellerOrder(orderId, sellerId) {
-		return await Order.query()
-			.where('id', '=', orderId)
-			.where('seller_id', '=', sellerId)
-			.fetch();
-	}
-
-	async _orderToJson(orderSerializer) {
-		const jsonSerializer = orderSerializer.toJSON();
-		try {
-			for (const order of jsonSerializer) {
-				order.customer_id = await User.findOrFail(order.customer_id);
-				order.seller_id = await User.findOrFail(order.seller_id);
-
-				order.delivery_address_id = await Address.findOrFail(
-					order.delivery_address_id
-				);
-				order.billing_address_id = await Address.findOrFail(
-					order.billing_address_id
-				);
-			}
-		} catch (TypeError) {
-			jsonSerializer.customer_id = await User.findOrFail(
-				jsonSerializer.customer_id
-			);
-			jsonSerializer.seller_id = await User.findOrFail(
-				jsonSerializer.seller_id
-			);
-
-			jsonSerializer.delivery_address_id = await Address.findOrFail(
-				jsonSerializer.delivery_address_id
-			);
-			jsonSerializer.billing_address_id = await Address.findOrFail(
-				jsonSerializer.billing_address_id
-			);
-		}
-
-		return jsonSerializer;
+		response.send(sellerOrder.toJSON());
 	}
 }
 

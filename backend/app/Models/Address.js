@@ -4,6 +4,10 @@
 const Model = use('Model');
 
 class Address extends Model {
+	static get hidden() {
+		return ['user_id'];
+	}
+
 	user() {
 		return this.belongsTo('App/Models/User');
 	}
