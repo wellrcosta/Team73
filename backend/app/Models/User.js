@@ -7,6 +7,17 @@ const Model = use('Model');
 const Hash = use('Hash');
 
 class User extends Model {
+	static get hidden() {
+		return ['password', 'delivery_address_id', 'billing_address_id'];
+	}
+
+	defaultDeliveryAddress() {
+		return this.hasOne('App/Models/Address');
+	}
+
+	defaultBillingAddress() {
+		return this.hasOne('App/Models/Address');
+	}
 	static boot() {
 		super.boot();
 
@@ -20,7 +31,6 @@ class User extends Model {
 			}
 		});
 	}
-
 	tokens() {
 		return this.hasMany('App/Models/Token');
 	}
