@@ -6,7 +6,30 @@
 const Products = use('App/Models/Product');
 class ProductController {
 	async index({ request, response }) {
-		const data = await Products.all();
+		let {
+			status = '1',
+			category = null,
+			page = 1,
+			per_page = '5',
+		} = request.get();
+		let data = [];
+
+		if (category !== null) {
+			data = await Products.query()
+				.where('status', '=', !!parseInt(status))
+				.with('category')
+				.where('category', '=', category)
+				.limit(per_page)
+				.offset(per_page * page - per_page)
+				.fetch();
+		} else {
+			data = await Products.query()
+				.where('status', '=', !!parseInt(status))
+				.with('category')
+				.limit(per_page)
+				.offset(per_page * page - per_page)
+				.fetch();
+		}
 
 		return data;
 	}
@@ -14,7 +37,7 @@ class ProductController {
 	async store({ auth, request, response }) {
 		const { id } = auth.user;
 
-		const data = request.only([
+		const { category, ...data } = request.only([
 			'name',
 			'description',
 			'status',
@@ -24,6 +47,11 @@ class ProductController {
 		]);
 
 		const product = await Products.create({ ...data, user_id: id });
+
+		if (category && category.length > 0) {
+			await product.category().attach(category);
+			await product.load('category');
+		}
 
 		return product;
 	}
@@ -36,9 +64,44 @@ class ProductController {
 		return data;
 	}
 
-	async update({ params, request, response }) {}
+	async update({ auth, params, request, response }) {
+		const { id } = auth.user;
 
-	async destroy({ params, request, response }) {}
+		const product = await Products.findOrFail(params.id);
+
+		const { category, ...data } = request.only([
+			'name',
+			'description',
+			'status',
+			'price',
+			'brand',
+			'category',
+		]);
+
+		product.merge(data);
+
+		await product.save();
+
+		if (category && category.length > 0) {
+			await product.category().sync(category);
+			await product.load('category');
+		}
+
+		return product;
+	}
+
+	async destroy({ params, request, response }) {
+		const { id } = auth.user;
+
+		const product = await Products.findOrFail(params.id);
+
+		if (id !== product.user_id) {
+			return response.status(401);
+		}
+
+		await product.delete();
+		return response.status(200);
+	}
 }
 
 module.exports = ProductController;

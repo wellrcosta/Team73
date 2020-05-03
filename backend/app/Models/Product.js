@@ -4,12 +4,10 @@
 const Model = use('Model');
 
 class Product extends Model {
-	variations() {
-		return this.hasMany('App/Models/ProductVariation');
-	}
 	category() {
-		return this.hasMany('App/Models/ProductCategory');
+		return this.belongsToMany('App/Models/Category');
 	}
+
 	user() {
 		return this.belongsTo('App/Models/User');
 	}

@@ -5,24 +5,25 @@ const Schema = use('Schema');
 
 class ProductSchema extends Schema {
 	up() {
-		this.create('products', (table) => {
+		this.create('product', (table) => {
 			table.increments();
-			table.string('name').notNullable().unique();
-			table.string('description').notNullable();
+			table.string('name').notNullable();
+			table.string('description', 500).notNullable();
 			table.boolean('status').defaultTo(true);
 			table.bigInteger('price').notNullable();
 			table.string('brand');
-			table.timestamps();
 			table
 				.string('user_id')
-				.references('username')
+				.references('id')
 				.inTable('users')
-				.onUpdate('CASCADE');
+				.onUpdate('CASCADE')
+				.onDelete('SET NULL');
+			table.timestamps();
 		});
 	}
 
 	down() {
-		this.drop('products');
+		this.drop('product');
 	}
 }
 
