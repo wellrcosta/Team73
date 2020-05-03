@@ -14,9 +14,6 @@ Route.get('/populate', 'PopulateController.Do');
 Route.post('/users', 'UserController.create');
 Route.post('/sessions', 'SessionController.create');
 Route.resource('/products', 'ProductController').apiOnly().middleware('auth');
-=======
-Route.post('/populate', 'Populate.Do');
-Route.post('/sessions', 'SessionController.create');
 
 Route.get('/myOrders', 'CustomerOrderController.index').middleware('auth');
 Route.post('/myOrders', 'CustomerOrderController.store').middleware('auth');
