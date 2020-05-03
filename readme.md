@@ -1,67 +1,15 @@
-# Techs
+# Team73 Development
 
-> O arquivo "settings.json" contém o padrão de código que vamos levar no projeto.
+### Página do Trello onde estamos nos organizando:
 
-### Frontend - React
+> https://trello.com/b/u10bMHMz/development
 
-### Backend - Nodejs com AdonisJS
+## Techs
 
-### Mobile - React Native
+> Frontend está sendo desenvolvido utilizando React Hooks para gerenciamento de estado dos components e outras funções. Para formulários estamos usando o Unform.
+> Backend está sendo desenvolvido em NodeJS utilizando o framework AdonisJS. A autenticação está sendo feita via JWT e o banco que optamos usar foi o Postgres.
+> Mobile será desenvolvido em React Native utilizando o Expo para facilitar o desenvolvimento.
 
-# Backend - Ideias
+## Helper
 
-Login com bearer
-
-# Rotas:
-
-## products
-
-> per*page=100 *
-> status=enabled \_
-> categorias {
-> Dormitórios > Casal > Guarda Roupas > 2 Portas
-> }
-
-## orders
-
-> pedidos Aprovados _
-> Nota Fiscal Emitida _
-> Pagamento Pendente _
-> pedidos Cancelados _
-> Entregues ao Cliente _
-> Pedidos Enviado _
-
-## pedidos
-
-> NEW _
-> APPROVED _
-> INVOICED _
-> SHIPPED _
-> DELIVERED _
-> CANCELED _
-> SHIPMENT_EXCEPTION \*
-> PAYMENT_OVERDUE
-
-## queues/orders
-
-> Code: book_product
-> Label: Pagamento Pendente (SkyHub)
-> Type: NEW
-
----
-
-> Code: order_canceled
-> Label: Cancelado (SkyHub)
-> Type: CANCELED
-
----
-
-> Code: payment_received
-> Label: Aprovado (SkyHub)
-> Type: APPROVED
-
-# Frontend - Ideias
-
-> Pagina de login
-> Pagina de cadastro
-> Pagina de busca
+> O arquivo "settings.json" contém o arquivo de configuração do VS Code padrão de linting e identação que vamos levar no projeto.
