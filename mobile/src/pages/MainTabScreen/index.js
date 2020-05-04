@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Global from '../../global';
 
 import BaseScreen from '../BaseScreen';
+import SellersSearchResult from '../SellersSearchResult';
 
 const HomeStack = createStackNavigator();
 
@@ -26,7 +27,7 @@ const MainTabScreen = () => (
 		/>
 		<Tab.Screen
 			name='Notifications'
-			component={BaseScreen}
+			component={SellersSearchResult}
 			options={{
 				tabBarLabel: 'Search',
 				tabBarColor: Global.primary,
