@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
+
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, Text, TextInput } from 'react-native';
 
-import styles from './styles';
 import imgLogo from '../../assets/logo.png';
 import imgCelebrate from '../../assets/celebration.png';
-
-import SingUpText from '../../components/singUpText';
 import Button from '../../components/button';
-import OptionsLogin from '../../components/optionsLogin';
+
+import styles from './styles';
 
 export default function Register() {
 	const [password, setPassword] = useState('');

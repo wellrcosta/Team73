@@ -1,13 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import Global from '../../global';
-
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		fontFamily: Global.fontFamily,
+		paddingTop: 30,
+		paddingHorizontal: 30,
 	},
 });
 

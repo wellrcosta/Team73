@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 
 import styles from './styles';
 
+import Button from '../../components/button';
 import imgLogo from '../../assets/logo.png';
 
-import Button from '../../components/button';
+import { useAuth } from '../../hooks/auth';
 
-export default function SingIn() {
+const SingIn = () => {
+	const { signIn } = useAuth();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const navigation = useNavigation();
+
+	const navigateToRegister = () => {
+		navigation.navigate('Register');
+	};
 
 	return (
 		<>
@@ -29,20 +39,27 @@ export default function SingIn() {
 					<TextInput
 						onChangeText={setPassword}
 						style={styles.input}
-						placeholder='********'
+						placeholder='**********'
+						secureTextEntry={true}
 					/>
 				</View>
 				<View style={styles.button}>
-					<Button name='Entrar' />
+					<Button name='Entrar' onPress={signIn} />
 				</View>
 
 				<View style={styles.register}>
 					<Text style={styles.textRegister}>Não tem conta?</Text>
-					<TouchableOpacity style={styles.buttonRegister}>
+
+					<TouchableOpacity
+						style={styles.buttonRegister}
+						onPress={navigateToRegister}
+					>
 						<Text style={styles.textButton}>Faça seu cadastro</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
 		</>
 	);
-}
+};
+
+export default SingIn;

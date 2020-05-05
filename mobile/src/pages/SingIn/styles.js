@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+import Global from '../../global';
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#390099',
+		backgroundColor: Global.primary,
 		position: 'relative',
 		borderTopLeftRadius: 35,
 		borderTopRightRadius: 35,
@@ -21,18 +23,18 @@ const styles = StyleSheet.create({
 	textTitle: {
 		fontSize: 20,
 		fontWeight: '800',
-		color: '#FFFF',
+		color: Global.light,
 	},
 	boxForm: {
 		marginTop: 90,
 	},
 	input: {
-		color: '#FFFF',
+		color: Global.light,
 		marginTop: 8,
 		marginLeft: 35,
 		marginRight: 35,
 		borderBottomWidth: 1.8,
-		borderBottomColor: '#FFFF',
+		borderBottomColor: Global.light,
 	},
 	button: {
 		marginTop: 90,
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
 		marginLeft: 85,
 	},
 	textRegister: {
-		color: '#FFFF',
+		color: Global.light,
 	},
 	textButton: {
 		marginLeft: 5,

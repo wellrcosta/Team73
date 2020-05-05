@@ -1,14 +1,15 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
 
-import styles from './styles';
+import { View, Image, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import imgGroup253 from '../../assets/group253.png';
 import imgLogo from '../../assets/whiteLogo.png';
 
 import SingUpText from '../../components/singUpText';
 import Button from '../../components/button';
+
+import styles from './styles';
 
 export default function Main() {
 	const navigation = useNavigation();
@@ -22,8 +23,7 @@ export default function Main() {
 			<Image source={imgGroup253} style={styles.imgGroup} />
 			<Image source={imgLogo} style={styles.imgLogo} />
 
-			<Text style={styles.title}>Só que sem</Text>
-			<Text style={styles.title2}>sair de casa.</Text>
+			<Text style={styles.title}>Só que sem sair de casa.</Text>
 
 			<View style={styles.containerBottom}>
 				<Button
@@ -31,8 +31,8 @@ export default function Main() {
 					name='Registrar-se'
 					onPress={navigateToRegister}
 				/>
+				<SingUpText />
 			</View>
-			<SingUpText />
 		</View>
 	);
 }

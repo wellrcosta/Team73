@@ -10,7 +10,6 @@ import BaseScreen from '../BaseScreen';
 import SellersSearchResult from '../SellersSearchResult';
 
 const HomeStack = createStackNavigator();
-
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = () => (

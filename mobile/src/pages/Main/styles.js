@@ -1,26 +1,20 @@
 import { StyleSheet } from 'react-native';
 
+import Global from '../../global';
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#390099',
-		position: 'relative',
+		backgroundColor: Global.primary,
 	},
 	title: {
 		fontSize: 40,
 		fontWeight: 'bold',
-		color: '#FFF',
+		color: Global.light,
 		position: 'absolute',
-		marginTop: 145,
+		marginTop: 150,
 		marginLeft: 35,
-	},
-	title2: {
-		fontSize: 40,
-		fontWeight: 'bold',
-		color: '#FFF',
-		position: 'absolute',
-		marginTop: 190,
-		marginLeft: 35,
+		marginRight: 80,
 	},
 	imgGroup: {
 		position: 'absolute',
