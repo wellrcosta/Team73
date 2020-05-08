@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
 import { View, Image, Text, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import imgLogo from '../../assets/logo.png';
 import imgCelebrate from '../../assets/celebration.png';
-import Button from '../../components/button';
+import Button from '../../components/Button';
+import BoxWithLogo from '../../components/BoxWithLogo';
 
 import styles from './styles';
 
@@ -18,22 +19,24 @@ export default function Register() {
 	};
 
 	return (
-		<>
-			<Image source={imgLogo} style={styles.imgLogo} />
-			<View style={styles.container}>
-				<Text style={styles.textTitle}>Agora digite sua senha</Text>
+		<BoxWithLogo>
+			<View style={styles.top}>
+				<Text style={styles.title}>Agora digite sua senha</Text>
+				<Text style={[styles.title, styles.subtitle]}>
+					Escolha uma senha forte
+				</Text>
+			</View>
 
-				<Text style={styles.labelName}>Escolha uma senha forte</Text>
+			<View style={styles.boxForm}>
 				<TextInput
 					style={styles.input}
 					onChangeText={setPassword}
 					secureTextEntry={true}
 					placeholder='*****************'
 				/>
-				<Button name='Enviar' onPress={navigateToHomePage} />
-
-				<Image source={imgCelebrate} style={styles.image} />
+				<Button onPress={navigateToHomePage}>Enviar</Button>
 			</View>
-		</>
+			<Image source={imgCelebrate} style={styles.image} />
+		</BoxWithLogo>
 	);
 }

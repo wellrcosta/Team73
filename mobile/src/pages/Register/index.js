@@ -5,9 +5,10 @@ import { View, Image, Text, TextInput } from 'react-native';
 
 import imgLogo from '../../assets/logo.png';
 
-import SingUpText from '../../components/singUpText';
-import Button from '../../components/button';
-import OptionsLogin from '../../components/optionsLogin';
+import SingUpText from '../../components/SingUpText';
+import Button from '../../components/Button';
+import OptionsLogin from '../../components/OptionsLogin';
+import BoxWithLogo from '../../components/BoxWithLogo';
 
 import styles from './styles';
 
@@ -20,26 +21,30 @@ export default function Register() {
 	};
 
 	return (
-		<>
-			<Image source={imgLogo} style={styles.imgLogo} />
-			<View style={styles.container}>
-				<Text style={styles.textTitle}>
-					Por favor, digite o seu primeiro nome
-				</Text>
+		<BoxWithLogo>
+			<View style={styles.top}>
+				<Text style={styles.title}>Por favor, digite o seu</Text>
+				<Text style={styles.title}>primeiro nome</Text>
 
-				<Text style={styles.labelName}>Como gosta de ser chamado? </Text>
+				<Text style={[styles.title, styles.subtitle]}>
+					Como gosta de ser chamado?
+				</Text>
+			</View>
+			<View style={styles.boxForm}>
 				<TextInput
 					style={styles.input}
 					onChangeText={setName}
 					placeholder='Digite seu nome aqui'
 				/>
-				<Button name='Enviar' onPress={navigateToRegister2} />
+				<Button onPress={navigateToRegister2}>Enviar</Button>
 
-				<View>
-					<SingUpText />
-				</View>
+				<SingUpText
+					primaryText='Já tem uma conta?'
+					textOnPress='Entrar'
+					navigate='SingIn'
+				/>
 				<OptionsLogin />
 			</View>
-		</>
+		</BoxWithLogo>
 	);
 }

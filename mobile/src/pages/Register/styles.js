@@ -2,45 +2,36 @@ import { StyleSheet } from 'react-native';
 import Global from '../../global';
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: Global.primary,
-		position: 'relative',
-		borderTopLeftRadius: 35,
-		borderTopRightRadius: 35,
+	boxForm: {
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
-	imgLogo: {
-		marginTop: 40,
-		marginBottom: 20,
-		marginHorizontal: '15%',
+	top: {
+		marginTop: '10%',
 	},
-	textTitle: {
-		marginTop: 65,
-		marginLeft: 35,
-		marginRight: 91,
-		fontSize: 26,
-		fontWeight: '500',
-		color: Global.primary,
-	},
-	labelName: {
+	title: {
+		alignSelf: 'flex-start',
+		marginLeft: '5%',
+		marginRight: '2%',
+		fontSize: 25,
+		fontWeight: '800',
 		color: Global.light,
+	},
+	subtitle: {
 		fontSize: 14,
-		marginTop: 50,
-		marginLeft: 35,
+		marginTop: '15%',
 	},
 	input: {
 		color: Global.light,
-		marginTop: 2,
-		marginRight: 65,
-		marginHorizontal: 35,
-		marginBottom: 25,
-		fontSize: 24,
-		borderBottomWidth: 2,
+		marginTop: '1%',
+		width: '90%',
+		fontSize: 23,
+		borderBottomWidth: 1.8,
 		borderBottomColor: Global.light,
 	},
 	image: {
-		marginTop: '10%',
-		marginLeft: '13%',
+		marginTop: '15%',
+		marginHorizontal: '20%',
 		height: 200,
 		width: 290,
 	},
