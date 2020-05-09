@@ -3,9 +3,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Main from '../pages/Main';
-import SingIn from '../pages/SingIn';
-import Register from '../pages/Register';
-import Register2 from '../pages/Register/register2';
+import SignIn from '../pages/SignIn';
+import Register from '../pages/Register/NameRegister';
+import Cell from '../pages/Register/CellRegister';
+import ConfirmCell from '../pages/Register/ConfirmCellRegister';
+import Password from '../pages/Register/PasswordRegister';
 
 const Stack = createStackNavigator();
 
@@ -13,9 +15,11 @@ export default function AuthRoutes() {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			<Stack.Screen name='Main' component={Main} />
-			<Stack.Screen name='SingIn' component={SingIn} />
+			<Stack.Screen name='SignIn' component={SignIn} />
 			<Stack.Screen name='Register' component={Register} />
-			<Stack.Screen name='Register2' component={Register2} />
+			<Stack.Screen name='Password' component={Password} />
+			<Stack.Screen name='Cell' component={Cell} />
+			<Stack.Screen name='ConfirmCell' component={ConfirmCell} />
 		</Stack.Navigator>
 	);
 }

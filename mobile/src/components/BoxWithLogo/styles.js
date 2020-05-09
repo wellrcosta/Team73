@@ -10,9 +10,11 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 35,
 		borderTopRightRadius: 35,
 	},
-	imgLogo: {
-		marginTop: '3%',
-		marginBottom: '3%',
+	containerLogo: {
+		alignItems: 'center',
+		alignSelf: 'center',
+		marginTop: '8%',
+		marginBottom: '4%',
 	},
 });
 

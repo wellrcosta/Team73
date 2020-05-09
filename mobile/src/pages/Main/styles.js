@@ -6,20 +6,27 @@ import Global from '../../global';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingTop: Constants.statusBarHeight + 25,
 		backgroundColor: Global.primary,
+		paddingTop: Constants.statusBarHeight + 20,
+	},
+	containerButtons: {
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	containerTop: {
-		flex: 1,
-		position: 'absolute',
-		flexDirection: 'row',
+		paddingHorizontal: 20,
+		paddingBottom: '15%',
 	},
 	title: {
 		fontSize: 40,
 		fontWeight: 'bold',
 		color: Global.light,
+		zIndex: 1,
 	},
-	imageHome: {},
+
+	imageHome: {
+		resizeMode: 'contain',
+	},
 	imageLogo: {},
 });
 

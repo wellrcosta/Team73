@@ -6,7 +6,9 @@ import styles from './styles';
 
 const BoxWithLogo = ({ children }) => (
 	<>
-		<Image source={imgLogo} style={styles.imgLogo} />
+		<View style={styles.containerLogo}>
+			<Image source={imgLogo} />
+		</View>
 		<View style={styles.container}>{children}</View>
 	</>
 );

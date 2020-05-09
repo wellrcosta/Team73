@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
-		margin: '5%',
+		marginTop: '10%',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		height: 70,
-		width: 80,
+		width: 70,
 	},
 	icons: {
-		height: 85,
-		width: 85,
+		height: 70,
+		width: 70,
 	},
 	text: {
 		fontSize: 16,

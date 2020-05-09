@@ -9,7 +9,7 @@ import BoxWithLogo from '../../components/BoxWithLogo';
 
 import styles from './styles';
 
-const SingIn = () => {
+const SignIn = () => {
 	const { signIn } = useAuth();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -45,4 +45,4 @@ const SingIn = () => {
 	);
 };
 
-export default SingIn;
+export default SignIn;

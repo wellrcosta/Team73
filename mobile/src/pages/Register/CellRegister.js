@@ -3,14 +3,13 @@ import React, { useState } from 'react';
 import { View, Image, Text, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import imgLogo from '../../assets/logo.png';
-import imgCelebrate from '../../assets/celebration.png';
 import Button from '../../components/Button';
+import imgCelebrate from '../../assets/celebration.png';
 import BoxWithLogo from '../../components/BoxWithLogo';
 
 import styles from './styles';
 
-export default function Register() {
+export default function Password() {
 	const [password, setPassword] = useState('');
 	const navigation = useNavigation();
 
@@ -36,7 +35,10 @@ export default function Register() {
 				/>
 				<Button onPress={navigateToHomePage}>Enviar</Button>
 			</View>
-			<Image source={imgCelebrate} style={styles.image} />
+
+			<View style={styles.containerImage}>
+				<Image source={imgCelebrate} style={styles.image} />
+			</View>
 		</BoxWithLogo>
 	);
 }
