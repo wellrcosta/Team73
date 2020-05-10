@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Global from '../../global';
+import Global from '../../../global';
 
 const styles = StyleSheet.create({
 	boxTitle: {
@@ -26,14 +26,15 @@ const styles = StyleSheet.create({
 		marginLeft: '3%',
 		flexDirection: 'row',
 	},
+
 	input: {
 		width: '90%',
 		fontSize: 23,
-		fontWeight: 'bold',
 		color: Global.light,
 		borderBottomWidth: 1.8,
 		borderBottomColor: Global.light,
 	},
+
 	containerImage: {
 		marginTop: '10%',
 		justifyContent: 'center',

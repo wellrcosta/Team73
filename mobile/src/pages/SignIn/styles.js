@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		marginTop: '5%',
 		width: '90%',
-		borderBottomWidth: 1.7,
+		borderBottomWidth: 1.8,
 		borderBottomColor: Global.light,
 	},
 });

@@ -1,13 +1,9 @@
 import { StyleSheet } from 'react-native';
-import Global from '../../global';
+import Global from '../../../global';
 
 const styles = StyleSheet.create({
 	boxTitle: {
 		marginTop: '10%',
-	},
-	boxForm: {
-		justifyContent: 'center',
-		alignItems: 'center',
 	},
 	title: {
 		alignSelf: 'flex-start',
@@ -19,25 +15,22 @@ const styles = StyleSheet.create({
 	},
 	subtitle: {
 		fontSize: 14,
+		fontWeight: '800',
 		marginTop: '15%',
+	},
+	text: {
+		fontSize: 14,
+		fontWeight: 'bold',
+		marginTop: '7%',
 	},
 	containerInputs: {
 		marginTop: 6,
 		marginLeft: '3%',
 		flexDirection: 'row',
 	},
-	input: {
-		width: '90%',
-		fontSize: 23,
-		fontWeight: 'bold',
-		color: Global.light,
-		borderBottomWidth: 1.8,
-		borderBottomColor: Global.light,
-	},
-	containerImage: {
-		marginTop: '10%',
-		justifyContent: 'center',
-		alignContent: 'center',
+	containerRetry: {
+		marginTop: '9%',
+		marginLeft: '5%',
 	},
 });
 

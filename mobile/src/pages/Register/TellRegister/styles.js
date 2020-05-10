@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
-import Global from '../../global';
+import Global from '../../../global';
 
 const styles = StyleSheet.create({
 	boxTitle: {
 		marginTop: '10%',
 	},
 	boxForm: {
-		justifyContent: 'center',
-		alignItems: 'center',
+		marginLeft: '5%',
+		marginRight: '10%',
+		flexDirection: 'row',
 	},
 	title: {
 		alignSelf: 'flex-start',
@@ -29,15 +30,14 @@ const styles = StyleSheet.create({
 	input: {
 		width: '90%',
 		fontSize: 23,
-		fontWeight: 'bold',
 		color: Global.light,
 		borderBottomWidth: 1.8,
 		borderBottomColor: Global.light,
 	},
-	containerImage: {
+	containerBottom: {
 		marginTop: '10%',
 		justifyContent: 'center',
-		alignContent: 'center',
+		alignItems: 'center',
 	},
 });
 

@@ -6,16 +6,15 @@ import { View, Text, TextInput } from 'react-native';
 import SingUpText from '../../components/SingUpText';
 import Button from '../../components/Button';
 import BoxWithLogo from '../../components/BoxWithLogo';
-import OptionsLogin from '../../components/OptionsLogin';
 
 import styles from './styles';
 
-export default function Register() {
+export default function NameRegister() {
 	const [name, setName] = useState('');
 	const navigation = useNavigation();
 
-	const navigateToPassword = () => {
-		navigation.navigate('Password');
+	const navigateToCell = () => {
+		navigation.navigate('Tell');
 	};
 
 	return (
@@ -35,15 +34,14 @@ export default function Register() {
 					onChangeText={setName}
 					placeholder='Digite seu nome aqui'
 				/>
-				<Button onPress={navigateToPassword}>Enviar</Button>
+				<Button onPress={navigateToCell}>Enviar</Button>
 
 				<SingUpText
 					primaryText='Já tem uma conta?'
-					textOnPress='Entrar'
+					textOnPress='Faça login'
 					navigate='SingIn'
 				/>
 			</View>
-			<OptionsLogin />
 		</BoxWithLogo>
 	);
 }

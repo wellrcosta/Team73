@@ -3,18 +3,14 @@ import Global from '../../global';
 
 const styles = StyleSheet.create({
 	button: {
-		width: 36,
-		height: 36,
-		marginLeft: 6,
-		borderRadius: 35,
+		height: 13,
+		width: '54.3%',
 		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: Global.light,
+		flexDirection: 'row',
 	},
 	textButton: {
-		fontSize: 15,
-		fontWeight: 'bold',
-		color: Global.secondary,
+		color: Global.light,
+		marginLeft: 5,
 	},
 });
 

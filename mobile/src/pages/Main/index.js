@@ -22,7 +22,7 @@ export default function Main() {
 				<SingUpText
 					navigate='SignIn'
 					primaryText='Já tem uma conta?'
-					textOnPress='Entrar'
+					textOnPress='Faça login'
 				/>
 			</View>
 		</View>
