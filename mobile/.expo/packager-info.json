@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://3c-h9z.anonymous.mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.3c-h9z.anonymous.mobile.exp.direct",
-  "ngrokPid": 24871,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }

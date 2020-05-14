@@ -1,19 +1,20 @@
 import { StyleSheet } from 'react-native';
+import Global from '../../global';
 
 const styles = StyleSheet.create({
 	button: {
-		height: 41.22,
-		width: 250,
-		borderRadius: 23,
-		backgroundColor: '#FFFF',
-		marginHorizontal: '18%',
+		width: 36,
+		height: 36,
+		marginLeft: 6,
+		borderRadius: 35,
 		alignItems: 'center',
 		justifyContent: 'center',
+		backgroundColor: Global.light,
 	},
 	textButton: {
-		fontSize: 16,
-		color: '#EF476F',
+		fontSize: 15,
 		fontWeight: 'bold',
+		color: Global.secondary,
 	},
 });
 

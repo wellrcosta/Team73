@@ -2,25 +2,21 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		marginTop: '8%',
-		marginHorizontal: '22%',
+		marginTop: '5.5%',
 		flexDirection: 'row',
 	},
-	registerText: {
+	primaryText: {
 		fontSize: 16,
 		color: '#FFFF',
 		fontWeight: 'bold',
-	},
-	buttonRegister: {
-		marginLeft: 5,
-		height: 20,
-		width: 75,
 	},
 	textButton: {
 		fontSize: 16,
 		fontWeight: 'bold',
 		color: '#EF476F',
+	},
+	buttonRegister: {
+		marginLeft: 5,
 	},
 });
 

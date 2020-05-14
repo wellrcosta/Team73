@@ -1,45 +1,47 @@
 import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Text, TextInput } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 
-import imgLogo from '../../assets/logo.png';
-
-import SingUpText from '../../components/singUpText';
-import Button from '../../components/button';
-import OptionsLogin from '../../components/optionsLogin';
+import SingUpText from '../../components/SingUpText';
+import Button from '../../components/Button';
+import BoxWithLogo from '../../components/BoxWithLogo';
 
 import styles from './styles';
 
-export default function Register() {
+export default function NameRegister() {
 	const [name, setName] = useState('');
 	const navigation = useNavigation();
 
-	const navigateToRegister2 = () => {
-		navigation.navigate('Register2');
+	const navigateToCell = () => {
+		navigation.navigate('Tell');
 	};
 
 	return (
-		<>
-			<Image source={imgLogo} style={styles.imgLogo} />
-			<View style={styles.container}>
-				<Text style={styles.textTitle}>
-					Por favor, digite o seu primeiro nome
+		<BoxWithLogo>
+			<View style={styles.boxTitle}>
+				<Text style={styles.title}>Por favor, digite o seu</Text>
+				<Text style={styles.title}>primeiro nome</Text>
+			</View>
+
+			<View style={styles.boxForm}>
+				<Text style={[styles.title, styles.subtitle]}>
+					Como gosta de ser chamado?
 				</Text>
 
-				<Text style={styles.labelName}>Como gosta de ser chamado? </Text>
 				<TextInput
 					style={styles.input}
 					onChangeText={setName}
 					placeholder='Digite seu nome aqui'
 				/>
-				<Button name='Enviar' onPress={navigateToRegister2} />
+				<Button onPress={navigateToCell}>Enviar</Button>
 
-				<View>
-					<SingUpText />
-				</View>
-				<OptionsLogin />
+				<SingUpText
+					primaryText='Já tem uma conta?'
+					textOnPress='Faça login'
+					navigate='SingIn'
+				/>
 			</View>
-		</>
+		</BoxWithLogo>
 	);
 }

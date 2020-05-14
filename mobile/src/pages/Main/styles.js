@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
 import Global from '../../global';
 
@@ -6,30 +7,27 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Global.primary,
+		paddingTop: Constants.statusBarHeight + 20,
+	},
+	containerButtons: {
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	containerTop: {
+		paddingHorizontal: 20,
+		paddingBottom: '15%',
 	},
 	title: {
 		fontSize: 40,
 		fontWeight: 'bold',
 		color: Global.light,
-		position: 'absolute',
-		marginTop: 150,
-		marginLeft: 35,
-		marginRight: 80,
+		zIndex: 1,
 	},
-	imgGroup: {
-		position: 'absolute',
-		marginTop: 80,
-		marginLeft: -60,
-		height: 375,
-		width: 460,
+
+	imageHome: {
+		resizeMode: 'contain',
 	},
-	imgLogo: {
-		marginTop: 75,
-		marginLeft: 170,
-	},
-	containerBottom: {
-		marginTop: '109%',
-	},
+	imageLogo: {},
 });
 
 export default styles;
