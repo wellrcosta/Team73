@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
 		color: Global.light,
 	},
 	input: {
-		fontSize: 20,
-		width: '90%',
-		marginTop: '5%',
 		color: Global.light,
+		fontSize: 20,
+		marginTop: '5%',
+		width: '90%',
 		borderBottomWidth: 1.8,
 		borderBottomColor: Global.light,
 	},

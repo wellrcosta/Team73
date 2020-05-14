@@ -37,7 +37,7 @@ const SignIn = () => {
 				<Button onPress={signIn}>Entrar</Button>
 				<SingUpText
 					primaryText='Não tem conta?'
-					textOnPress='Faça seu cadastro'
+					textOnPress='Faça agora'
 					navigate='Register'
 				/>
 			</View>
