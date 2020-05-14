@@ -9,25 +9,17 @@ const styles = StyleSheet.create({
 		backgroundColor: Global.primary,
 		paddingTop: Constants.statusBarHeight + 20,
 	},
+	containerImages: {
+		height: '65%',
+		width: '100%',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	containerButtons: {
+		marginTop: -40,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-	containerTop: {
-		paddingHorizontal: 20,
-		paddingBottom: '15%',
-	},
-	title: {
-		fontSize: 40,
-		fontWeight: 'bold',
-		color: Global.light,
-		zIndex: 1,
-	},
-
-	imageHome: {
-		resizeMode: 'contain',
-	},
-	imageLogo: {},
 });
 
 export default styles;

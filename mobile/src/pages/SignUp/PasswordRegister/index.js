@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import imgCelebration from '../../../assets/celebration.png';
 import Button from '../../../components/Button';
 import BoxWithLogo from '../../../components/BoxWithLogo';
 
@@ -30,9 +31,13 @@ export default function PasswordRegister() {
 					style={styles.input}
 					onChangeText={setPassword}
 					secureTextEntry={true}
-					placeholder='*****************'
+					placeholder='****************'
+					value={password}
 				/>
 				<Button onPress={navigateToHomePage}>Enviar</Button>
+			</View>
+			<View style={styles.containerImage}>
+				<Image source={imgCelebration} style={styles.image} />
 			</View>
 		</BoxWithLogo>
 	);
