@@ -5,6 +5,10 @@ const styles = StyleSheet.create({
 	boxTitle: {
 		marginTop: '10%',
 	},
+	boxForm: {
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	title: {
 		alignSelf: 'flex-start',
 		marginLeft: '5%',
@@ -15,22 +19,30 @@ const styles = StyleSheet.create({
 	},
 	subtitle: {
 		fontSize: 14,
-		fontWeight: '800',
 		marginTop: '15%',
-	},
-	text: {
-		fontSize: 14,
-		fontWeight: 'bold',
-		marginTop: '7%',
 	},
 	containerInputs: {
 		marginTop: 6,
 		marginLeft: '3%',
 		flexDirection: 'row',
 	},
-	containerRetry: {
-		marginTop: '9%',
-		marginLeft: '5%',
+	input: {
+		width: '90%',
+		fontSize: 22,
+		color: Global.light,
+		borderBottomWidth: 1.8,
+		borderBottomColor: Global.light,
+	},
+	containerImage: {
+		marginTop: '8%',
+		height: '40%',
+		justifyContent: 'center',
+		alignContent: 'center',
+	},
+	image: {
+		width: '100%',
+		height: '100%',
+		resizeMode: 'contain',
 	},
 });
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import BoxWithLogo from '../../../components/BoxWithLogo';
@@ -11,7 +11,6 @@ import Retry from '../../../components/Retry';
 import styles from './styles';
 
 export default function ConfirmTellRegister() {
-	const [password, setPassword] = useState('');
 	const navigation = useNavigation();
 
 	const navigateToPassword = () => {
@@ -41,6 +40,10 @@ export default function ConfirmTellRegister() {
 
 			<View style={styles.containerRetry}>
 				<Retry>TENTAR NOVAMENTE</Retry>
+			</View>
+
+			<View style={styles.containerImage}>
+				<Image />
 			</View>
 		</BoxWithLogo>
 	);
