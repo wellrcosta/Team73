@@ -39,7 +39,7 @@ export default function NameRegister() {
 				<SingUpText
 					primaryText='Já tem uma conta?'
 					textOnPress='Faça login'
-					navigate='SingIn'
+					navigate='SignIn'
 				/>
 			</View>
 		</BoxWithLogo>

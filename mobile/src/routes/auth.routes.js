@@ -4,10 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Main from '../pages/Main';
 import SignIn from '../pages/SignIn';
-import Register from '../pages/Register';
-import Tell from '../pages/Register/TellRegister';
-import ConfirmTell from '../pages/Register/ConfirmTellRegister';
-import Password from '../pages/Register/PasswordRegister';
+import Register from '../pages/SignUp';
+import Tell from '../pages/SignUp/TellRegister';
+import ConfirmTell from '../pages/SignUp/ConfirmTellRegister';
+import Password from '../pages/SignUp/PasswordRegister';
 
 const Stack = createStackNavigator();
 

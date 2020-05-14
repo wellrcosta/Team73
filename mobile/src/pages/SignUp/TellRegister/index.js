@@ -28,10 +28,11 @@ export default function TellRegister() {
 
 			<View style={styles.boxForm}>
 				<TextInput
-					style={styles.input}
+					value={tell}
 					onChangeText={setTell}
-					placeholder='+55 (99) 9 9999-9999'
 					maxLength={13}
+					style={styles.input}
+					placeholder='+55 (99) 9 9999-9999'
 					keyboardType='numeric'
 				/>
 				<RoundButton onPress={navigateToConfirmTell}>OK</RoundButton>
@@ -41,7 +42,7 @@ export default function TellRegister() {
 				<SingUpText
 					primaryText='Já tem uma conta?'
 					textOnPress='Faça login'
-					navigate='SingIn'
+					navigate='SignIn'
 				/>
 			</View>
 		</BoxWithLogo>

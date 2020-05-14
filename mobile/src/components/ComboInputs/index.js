@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 
 import styles from './styles';
 
-const ComboInputs = () => {
+const ComboInputs = ({ value, onChangeText }) => {
 	return (
 		<>
 			<TextInput
@@ -12,6 +12,8 @@ const ComboInputs = () => {
 				maxLength={1}
 				textAlign='center'
 				keyboardType='numeric'
+				onChangeText={onChangeText}
+				value={value}
 			/>
 		</>
 	);
