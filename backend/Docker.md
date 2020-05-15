@@ -9,7 +9,7 @@ Eu criei um arquivo Dockerfile para facilitar o uso do banco postgres no desenvo
 
 > 2 - Abra o terminal nessa pasta que estamos "backend"
 
-> 3 - Rode o comando **" docker build -t zoompy ."** (Sem aspas)
+> 3 - Rode o comando **"docker build -t zoompy ."** (Sem aspas)
 
 > 4 - Rode o comando **"docker run zoompy"** (Sem aspas)
 
