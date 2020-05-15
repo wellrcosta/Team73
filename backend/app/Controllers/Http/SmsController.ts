@@ -1,4 +1,3 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class SmsController {
-}
+export default class SmsController {}

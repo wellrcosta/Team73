@@ -21,7 +21,3 @@
 import Route from '@ioc:Adonis/Core/Route';
 
 Route.post('register', 'AuthController.register');
-Route.get('/dashboard', async ({ auth }) => {
-	const user = await auth.authenticate();
-	return `Hello user! Your email address is ${user.email}`;
-});
