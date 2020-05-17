@@ -1,6 +1,17 @@
 import { DateTime } from 'luxon';
 import Hash from '@ioc:Adonis/Core/Hash';
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm';
+import {
+	column,
+	beforeSave,
+	BaseModel,
+	hasMany,
+	HasMany,
+	hasOne,
+	HasOne,
+} from '@ioc:Adonis/Lucid/Orm';
+
+import Address from 'App/Models/Address';
+import Product from 'App/Models/Product';
 
 export default class User extends BaseModel {
 	@column({ isPrimary: true })
@@ -32,6 +43,15 @@ export default class User extends BaseModel {
 
 	@column()
 	public range: number;
+
+	@hasOne(() => Address)
+	public defaultDeliveryAddress: HasOne<typeof Address>;
+
+	@hasOne(() => Address)
+	public defaultBillingAddress: HasOne<typeof Address>;
+
+	@hasMany(() => Product)
+	public products: HasMany<typeof Product>;
 
 	@column.dateTime({ autoCreate: true })
 	public createdAt: DateTime;
